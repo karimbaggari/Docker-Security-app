@@ -23,29 +23,31 @@ Dropped Capabilities: All unnecessary Linux capabilities are dropped using --cap
 CPU Limits: CPU usage is limited to 50% of a single core using --cpu-period and --cpu-quota.
 
 # Create a non-root user
-
+```
 RUN useradd -m nonroot
 USER nonroot
-
+```
 # Copy the built application
-
+```
 COPY --from=builder /app/app .
-
+```
 # Set the application to run on a read-only file system
-
+```
 VOLUME [ "/data" ]
-
+```
 # Expose port 8080
+```
 EXPOSE 8080
-
+```
 # Drop all capabilities and set CPU limit
+```
 ENTRYPOINT [ "sh", "-c", "exec /app/app" ]
-
+```
 Build and Run the Docker Container
 Build the Docker Image
-
+```
 docker build -t go-docker-app .
-
+```
 # Final stage
 Run the Docker Container
 

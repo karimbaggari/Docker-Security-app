@@ -18,8 +18,11 @@ Before you begin, ensure you have the following installed:
 
 
 Read-Only Filesystem: The container's filesystem is set to read-only to enhance security.
+
 No Root User: The application runs as a non-root user to minimize security risks.
+
 Dropped Capabilities: All unnecessary Linux capabilities are dropped using --cap-drop=ALL.
+
 CPU Limits: CPU usage is limited to 50% of a single core using --cpu-period and --cpu-quota.
 
 # Create a non-root user

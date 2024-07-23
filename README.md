@@ -28,31 +28,8 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the Repository**
 
-   ```sh
-   git clone https://github.com/yourusername/go-docker-app.git
-   cd go-docker-app
-Create the Go Application
 
-Create a file named main.go with the following content:
 
-go
-Copier le code
-package main
-
-import (
-    "fmt"
-    "net/http"
-)
-
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hello, World!")
-}
-
-func main() {
-    http.HandleFunc("/", handler)
-    fmt.Println("Starting server on :8080")
-    http.ListenAndServe(":8080", nil)
-}
 Create the Dockerfile
 
 Create a file named Dockerfile with the following content:
@@ -60,23 +37,30 @@ Create a file named Dockerfile with the following content:
 Dockerfile
 Copier le code
 # Build stage
+```sh 
 FROM golang:1.20 AS builder
 WORKDIR /app
 COPY . .
 RUN go build -o app .
+'''
 
 # Final stage
+```sh
 FROM debian:slim
 WORKDIR /app
+'''
 
 # Create a non-root user
+```sh
 RUN useradd -m nonroot
 USER nonroot
-
+'''
 # Copy the built application
+```sh
 COPY --from=builder /app/app .
-
+'''
 # Set the application to run on a read-only file system
+```sh
 VOLUME [ "/data" ]
 
 # Expose port 8080
@@ -84,6 +68,7 @@ EXPOSE 8080
 
 # Drop all capabilities and set CPU limit
 ENTRYPOINT [ "sh", "-c", "exec /app/app" ]
+'''
 Build and Run the Docker Container
 Build the Docker Image
 
